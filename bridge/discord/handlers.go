@@ -103,7 +103,16 @@ func (b *Bdiscord) messageCreate(s *discordgo.Session, m *discordgo.MessageCreat
 	// if we have embedded content add it to text
 	if b.GetBool("ShowEmbeds") && m.Message.Embeds != nil {
 		for _, embed := range m.Message.Embeds {
-			rmsg.Text = rmsg.Text + "embed: " + embed.Title + " - " + embed.Description + " - " + embed.URL + "\n"
+			if embed.Title != "" {
+				rmsg.Text += "embed: " + embed.Title
+			}
+			if embed.Description != "" {
+				rmsg.Text += " - " + embed.Description
+			}
+			if embed.URL != "" {
+				rmsg.Text += " - " + embed.URL
+			}
+			rmsg.Text += "\n"
 		}
 	}
 
